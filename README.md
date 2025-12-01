@@ -171,9 +171,7 @@ Then:
 
 $$
 \[
-\frac{\partial L}{\partial a}
-=
-\frac{\partial z}{\partial a}
+\frac{\partial L}{\partial a}=\frac{\partial z}{\partial a}
 \cdot
 \frac{\partial L}{\partial z}
 \]

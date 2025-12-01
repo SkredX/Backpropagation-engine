@@ -1,64 +1,52 @@
 # Mathematical Formulation of the Backprop Engine
 
+---
+
 ## 1. Weighted Input (Pre-activation)
-For a neuron receiving inputs \( x_1, x_2 \) with weights \( w_1, w_2 \) and bias \( b \):
 
 \[
 n = x_1 w_1 + x_2 w_2 + b
 \]
 
-This is the scalar weighted sum before applying the activation function.
-
 ---
 
-## 2. Sigmoid Activation (with λ parameter)
-The sigmoid activation used in the code is:
+## 2. Sigmoid Activation (with \lambda parameter)
 
 \[
 O = \sigma(\lambda n) = \frac{1}{1 + e^{-\lambda n}}
 \]
 
-### Derivative of sigmoid:
-\[
-\frac{dO}{dn} 
-= \lambda \, O (1 - O)
-\]
+Derivative:
 
-This derivative appears in backpropagation when computing \(\frac{\partial L}{\partial n}\).
+\[
+\frac{dO}{dn} = \lambda\, O(1 - O)
+\]
 
 ---
 
 ## 3. Loss Function (Squared Error)
-The loss used is:
 
 \[
 L = \frac{1}{2}(T - O)^2
 \]
 
-where  
-- \(T\) is the target output  
-- \(O\) is the predicted output
-
-### Loss derivative with respect to output \(O\):
+Derivative:
 
 \[
-\frac{\partial L}{\partial O} = -(T - O) = O - T
+\frac{\partial L}{\partial O} = O - T
 \]
 
 ---
 
-## 4. Backpropagation of Output Error
-Using the chain rule:
+## 4. Backpropagation to Pre-activation \(n\)
 
 \[
 \frac{\partial L}{\partial n}
-= 
+=
 \frac{\partial L}{\partial O}
 \cdot
 \frac{dO}{dn}
 \]
-
-Substituting derivatives:
 
 \[
 \frac{\partial L}{\partial n}
@@ -66,18 +54,17 @@ Substituting derivatives:
 (O - T)\,\lambda\,O(1 - O)
 \]
 
-This value is stored as the node’s “delta”.
-
 ---
 
-## 5. Gradients of Parameters (Weights and Bias)
-For the pre-activation:
+## 5. Gradients of Parameters (Weights & Bias)
+
+Given:
 
 \[
 n = x_1 w_1 + x_2 w_2 + b
 \]
 
-The derivatives of \(n\) are:
+Derivatives:
 
 \[
 \frac{\partial n}{\partial w_1} = x_1,
@@ -87,32 +74,23 @@ The derivatives of \(n\) are:
 \frac{\partial n}{\partial b} = 1
 \]
 
-By chain rule:
+Thus:
 
 \[
-\frac{\partial L}{\partial w_1}
-=
-\frac{\partial L}{\partial n} \cdot x_1
+\frac{\partial L}{\partial w_1} = x_1 \, \frac{\partial L}{\partial n}
 \]
 
 \[
-\frac{\partial L}{\partial w_2}
-=
-\frac{\partial L}{\partial n} \cdot x_2
+\frac{\partial L}{\partial w_2} = x_2 \, \frac{\partial L}{\partial n}
 \]
 
 \[
-\frac{\partial L}{\partial b}
-=
-\frac{\partial L}{\partial n} \cdot 1
+\frac{\partial L}{\partial b} = 1 \cdot \frac{\partial L}{\partial n}
 \]
-
-These expressions determine weight and bias gradients.
 
 ---
 
-## 6. Gradient of Inputs (Optional, but computed by engine)
-Similarly:
+## 6. Input Gradients
 
 \[
 \frac{\partial n}{\partial x_1} = w_1
@@ -125,21 +103,16 @@ Similarly:
 Thus:
 
 \[
-\frac{\partial L}{\partial x_1}
-=
-\frac{\partial L}{\partial n} \cdot w_1
+\frac{\partial L}{\partial x_1} = w_1 \frac{\partial L}{\partial n}
 \]
 
 \[
-\frac{\partial L}{\partial x_2}
-=
-\frac{\partial L}{\partial n} \cdot w_2
+\frac{\partial L}{\partial x_2} = w_2 \frac{\partial L}{\partial n}
 \]
 
 ---
 
 ## 7. Weight Update Rule (Gradient Descent)
-Given learning rate \( \eta \):
 
 \[
 w_1 \leftarrow w_1 - \eta \frac{\partial L}{\partial w_1}
@@ -153,18 +126,17 @@ w_2 \leftarrow w_2 - \eta \frac{\partial L}{\partial w_2}
 b \leftarrow b - \eta \frac{\partial L}{\partial b}
 \]
 
-This reduces the loss in the next forward pass.
-
 ---
 
-## 8. Chain Rule Summary for Any Node
-If a node \(z\) depends on predecessors \(a, b\):
+## 8. General Chain Rule for Any Node
+
+If:
 
 \[
 z = f(a, b)
 \]
 
-Then for the loss \(L\):
+Then:
 
 \[
 \frac{\partial L}{\partial a}
@@ -182,11 +154,9 @@ Then for the loss \(L\):
 \frac{\partial L}{\partial z}
 \]
 
-This is exactly what the engine performs using `+=` as gradients may accumulate from multiple downstream uses.
-
 ---
 
-## 9. Derivatives of Basic Operations Used in the Engine
+## 9. Derivatives of Basic Operations
 
 ### Addition
 \[
@@ -201,7 +171,7 @@ z = a + b
 
 ### Multiplication
 \[
-z = a b
+z = ab
 \]
 
 \[
@@ -219,17 +189,13 @@ z = -a
 \frac{\partial z}{\partial a} = -1
 \]
 
-### Power (squared case)
+### Power (Square)
 \[
 z = a^2
 \]
 
 \[
-\frac{d z}{d a} = 2a
+\frac{dz}{da} = 2a
 \]
 
-These combine via chain rule to propagate deltas backward through the graph.
-
 ---
-
-# End of Mathematical Summary

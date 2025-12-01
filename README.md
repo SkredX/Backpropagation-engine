@@ -3,10 +3,11 @@
 ---
 
 ## 1. Weighted Input (Pre-activation)
-
+$$
 \[
 n = x_1 w_1 + x_2 w_2 + b
 \]
+$$
 
 ---
 

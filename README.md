@@ -43,7 +43,7 @@ $$
 $$
 
 
-## 4. Backpropagation to Pre-activation \(n\)
+## 4. Backpropagation to Pre-activation 
 
 $$
 \[

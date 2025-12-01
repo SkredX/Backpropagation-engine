@@ -47,9 +47,7 @@ $$
 
 $$
 \[
-\frac{\partial L}{\partial n}
-=
-\frac{\partial L}{\partial O}
+\frac{\partial L}{\partial n}=\frac{\partial L}{\partial O}
 \cdot
 \frac{dO}{dn}
 \]
@@ -57,9 +55,7 @@ $$
 
 $$
 \[
-\frac{\partial L}{\partial n}
-=
-(O - T)\,\lambda\,O(1 - O)
+\frac{\partial L}{\partial n}=(O - T)\,\lambda\,O(1 - O)
 \]
 $$
 
@@ -179,9 +175,7 @@ $$
 
 $$
 \[
-\frac{\partial L}{\partial b}
-=
-\frac{\partial z}{\partial b}
+\frac{\partial L}{\partial b}=\frac{\partial z}{\partial b}
 \cdot
 \frac{\partial L}{\partial z}
 \]

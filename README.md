@@ -9,7 +9,7 @@ n = x_1 w_1 + x_2 w_2 + b
 $$
 
 
-## 2. Sigmoid Activation (with \lambda parameter)
+## 2. Sigmoid Activation (with $\lambda$ parameter)
 
 $$
 \[
